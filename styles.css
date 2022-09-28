@@ -38,6 +38,10 @@ input {
 
 body {
   font-family: "Roboto", sans-serif;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
 }
 
 header {
@@ -52,9 +56,7 @@ header {
   align-items: center;
   padding: 1rem;
   padding-left: 2rem;
-  position: fixed;
-  top: 0;
-  left: 0;
+  grid-column: 1/ -1;
 }
 
 header > * {
@@ -94,4 +96,82 @@ header input:focus + label {
 header svg {
   height: 80%;
   margin: 0 0.5rem;
+}
+
+nav {
+  background-color: hsl(0, 0%, 90%);
+}
+
+.sidebar {
+  width: fit-content;
+  padding: 2rem;
+}
+
+.sidebar li {
+  --line-height: 1.2em;
+  --svg-size: 24px;
+  --flex-gap: 0.25rem;
+
+  padding: 1rem 1rem 0.5rem;
+  margin: 0.25rem 0;
+  cursor: pointer;
+  border-radius: 5px;
+  line-height: var(--line-height);
+}
+
+.sidebar li:hover,
+li.active {
+  background-color: hsl(0, 0%, 80%);
+}
+
+li.project-list {
+  text-transform: capitalize;
+}
+
+.sidebar li > :first-child {
+  display: flex;
+  align-items: center;
+  gap: var(--flex-gap);
+  flex-direction: row;
+  margin-bottom: 0.5rem;
+}
+
+.sidebar li > :last-child:not(:only-child) {
+  overflow-y: auto;
+  max-height: 0;
+  margin-left: calc(0.5rem + var(--svg-size) + var(--flex-gap));
+  transition: max-height 300ms ease-in-out;
+}
+
+.sidebar li.active > :last-child:not(:only-child) {
+  max-height: calc(var(--line-height) * 4);
+}
+
+.sidebar svg {
+  width: var(--svg-size);
+  height: var(--svg-size);
+}
+
+svg.inbox {
+  color: deeppink;
+}
+
+svg.today {
+  color: limegreen;
+}
+
+svg.week {
+  color: rebeccapurple;
+}
+
+svg.recurring {
+  color: deepskyblue;
+}
+
+svg.caret path {
+  transition: d 300ms ease-in-out;
+}
+
+li.active svg.caret path {
+  d: path("M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z");
 }

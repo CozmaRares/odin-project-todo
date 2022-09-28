@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="./styles.css" />
-    <link rel="stylesheet" href="./utilities.css" />
+    <script src="./script.js" defer></script>
   </head>
   <body>
     <header class="full-bleed">
@@ -19,5 +19,53 @@
         </svg>
       </label>
     </header>
+    <nav>
+      <ul class="sidebar">
+        <li>
+          <div>
+            <svg viewBox="0 0 24 24" class="inbox">
+              <path
+                fill="currentColor"
+                d="M19,15H15A3,3 0 0,1 12,18A3,3 0 0,1 9,15H5V5H19M19,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z"
+              />
+            </svg>
+            All
+          </div>
+        </li>
+        <li>
+          <div>
+            <svg viewBox="0 0 24 24" class="today">
+              <path
+                fill="currentColor"
+                d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z"
+              />
+            </svg>
+            Today
+          </div>
+        </li>
+        <li>
+          <div>
+            <svg viewBox="0 0 24 24" class="week">
+              <path
+                fill="currentColor"
+                d="M9,10V12H7V10H9M13,10V12H11V10H13M17,10V12H15V10H17M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5A2,2 0 0,1 5,3H6V1H8V3H16V1H18V3H19M19,19V8H5V19H19M9,14V16H7V14H9M13,14V16H11V14H13M17,14V16H15V14H17Z"
+              />
+            </svg>
+            This Week
+          </div>
+        </li>
+        <li>
+          <div>
+            <svg viewBox="0 0 24 24" class="recurring">
+              <path
+                fill="currentColor"
+                d="M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z"
+              />
+            </svg>
+            Recurring
+          </div>
+        </li>
+      </ul>
+    </nav>
   </body>
 </html>
