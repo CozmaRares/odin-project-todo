@@ -1,13 +1,21 @@
+import { Temporal } from "@js-temporal/polyfill";
+
 function toggleList(li) {
   li.classList.toggle("active");
 }
 
-const projects = localStorage.getItem("projects") || {
-  personal: [],
-  work: []
-};
+const projects = localStorage.getItem("projects") || [
+  {
+    type: "personal",
+    projects: []
+  },
+  {
+    type: "work",
+    projects: []
+  }
+];
 
-Object.entries(projects).forEach(([type, projects]) => {
+projects.forEach(({ type, projects }) => {
   const li = document.createElement("li");
 
   li.onclick = () => toggleList(li);
@@ -22,7 +30,7 @@ Object.entries(projects).forEach(([type, projects]) => {
     </svg>
     ${type}
   </div>
-  <div>
+  <div class="projects">
       ${
         projects.length !== 0
           ? projects.map(project => `<div>${project}</div>`).join("")

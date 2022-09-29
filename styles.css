@@ -136,15 +136,23 @@ li.project-list {
   margin-bottom: 0.5rem;
 }
 
-.sidebar li > :last-child:not(:only-child) {
+.projects {
   overflow-y: auto;
   max-height: 0;
   margin-left: calc(0.5rem + var(--svg-size) + var(--flex-gap));
+  margin-right: 1rem;
   transition: max-height 300ms ease-in-out;
+  scroll-snap-type: y mandatory;
 }
 
-.sidebar li.active > :last-child:not(:only-child) {
-  max-height: calc(var(--line-height) * 4);
+li.active .projects {
+  --rows: 5;
+
+  max-height: calc(var(--line-height) * var(--rows));
+}
+
+.projects > * {
+  scroll-snap-align: start;
 }
 
 .sidebar svg {
@@ -153,11 +161,15 @@ li.project-list {
 }
 
 svg.inbox {
-  color: deeppink;
+  color: salmon;
+}
+
+svg.done {
+  color: limegreen;
 }
 
 svg.today {
-  color: limegreen;
+  color: darkolivegreen;
 }
 
 svg.week {
@@ -166,6 +178,10 @@ svg.week {
 
 svg.recurring {
   color: deepskyblue;
+}
+
+svg.priority {
+  color: crimson;
 }
 
 svg.caret path {
