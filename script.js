@@ -10,20 +10,19 @@ function getTodayDate() {
   return new Date().toLocaleDateString("en-ZA");
 }
 
-function loadFromStorage(key) {
-  // const data = localStorage.getItem(key);
+function loadFromStorage() {
+  const data = localStorage.getItem("projects");
 
-  // if (data === null) return;
+  if (data === null) return;
 
-  // return JSON.parse(data);
-  return;
+  return JSON.parse(data);
 }
 
-let projects = loadFromStorage("projects") || {
+let projects = loadFromStorage() || {
   personal: [
     {
       id: "t-" + uuid(),
-      title: "Finish this shit",
+      title: "Finish this project",
       priority: PRIORITY.LOW,
       dueDate: "2022/10/09",
       done: true
@@ -31,6 +30,10 @@ let projects = loadFromStorage("projects") || {
   ],
   work: []
 };
+
+function loadIntoStorage() {
+  localStorage.setItem("projects", JSON.stringify(projects));
+}
 
 function renderProjects() {
   const sidebar = document.querySelector("[data-sidebar]");
@@ -173,6 +176,7 @@ function renderTask(project, task, idx, onlyDone) {
     if (onlyDone === false) li.classList.toggle("strike-through");
 
     projects[project][idx].done = !projects[project][idx].done;
+    loadIntoStorage();
   };
 
   li.appendChild(circle);
@@ -248,12 +252,14 @@ function addTask(task) {
 
   projects[project].push(task);
   renderTasks(filter);
+  loadIntoStorage();
 }
 
 function deleteTask(id, project) {
   projects[project] = projects[project].filter(task => task.id !== id);
 
   renderTasks(filter);
+  loadIntoStorage();
 }
 
 function openProjectPrompt() {
@@ -274,6 +280,7 @@ function addProject() {
 
   updateSelect("#project", Object.keys(projects));
   renderProjects();
+  loadIntoStorage();
 }
 
 function deleteProject(name) {
@@ -285,6 +292,7 @@ function deleteProject(name) {
 
   renderProjects();
   renderTasks();
+  loadIntoStorage();
 }
 
 document.querySelectorAll(".overlay").forEach(
