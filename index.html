@@ -3,13 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>ToDo List</title>
     <link rel="stylesheet" href="./styles.css" />
-    <script src="dist/bundle.js" defer></script>
+    <script src="./uuid.js" defer></script>
+    <script src="./select.js" defer></script>
+    <script src="./date-picker.js" defer></script>
+    <script src="./script.js" defer></script>
   </head>
   <body>
-    <header class="full-bleed">
-      <input type="text" name="search" id="search" placeholder="Search TODO" />
+    <div class="overlay" data-task-overlay>
+      <form data-task-form>
+        <h2>Add Task</h2>
+        <div>
+          <input type="text" name="title" id="title" required data-input />
+          <label for="title">Title</label>
+        </div>
+        <div id="project" data-input></div>
+        <div id="priority" data-input></div>
+        <div id="dueDate" data-input></div>
+        <button type="submit">Add Task</button>
+      </form>
+    </div>
+    <header>
+      <input type="text" name="search" id="search" placeholder="Search task" />
       <label for="search">
         <svg viewBox="0 0 24 24">
           <path
@@ -19,21 +35,19 @@
         </svg>
       </label>
     </header>
-    <nav>
-      <ul class="sidebar">
-        <li>
-          <div>
-            <svg viewBox="0 0 24 24" class="inbox">
+    <aside style="overflow: auto; max-height: 100vh">
+      <nav>
+        <ul class="sidebar-list">
+          <li onclick="renderTasks()">
+            <svg viewBox="0 0 24 24" class="all">
               <path
                 fill="currentColor"
                 d="M19,15H15A3,3 0 0,1 12,18A3,3 0 0,1 9,15H5V5H19M19,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z"
               />
             </svg>
             All
-          </div>
-        </li>
-        <li>
-          <div>
+          </li>
+          <li onclick="renderTasks('done')">
             <svg viewBox="0 0 24 24" class="done">
               <path
                 fill="currentColor"
@@ -41,10 +55,8 @@
               />
             </svg>
             Done
-          </div>
-        </li>
-        <li>
-          <div>
+          </li>
+          <li onclick="renderTasks('today')">
             <svg viewBox="0 0 24 24" class="today">
               <path
                 fill="currentColor"
@@ -52,32 +64,8 @@
               />
             </svg>
             Today
-          </div>
-        </li>
-        <li>
-          <div>
-            <svg viewBox="0 0 24 24" class="week">
-              <path
-                fill="currentColor"
-                d="M9,10V12H7V10H9M13,10V12H11V10H13M17,10V12H15V10H17M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5A2,2 0 0,1 5,3H6V1H8V3H16V1H18V3H19M19,19V8H5V19H19M9,14V16H7V14H9M13,14V16H11V14H13M17,14V16H15V14H17Z"
-              />
-            </svg>
-            This Week
-          </div>
-        </li>
-        <li>
-          <div>
-            <svg viewBox="0 0 24 24" class="recurring">
-              <path
-                fill="currentColor"
-                d="M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z"
-              />
-            </svg>
-            Recurring
-          </div>
-        </li>
-        <li>
-          <div>
+          </li>
+          <li onclick="renderTasks('by priority')">
             <svg viewBox="0 0 24 24" class="priority">
               <path
                 fill="currentColor"
@@ -85,9 +73,42 @@
               />
             </svg>
             Sort By Priority
-          </div>
+          </li>
+        </ul>
+      </nav>
+      <ul class="sidebar-list" data-sidebar>
+        <li data-add-project class="add-project" onclick="openProjectPrompt()">
+          <svg viewBox="0 0 24 24">
+            <path
+              fill="currentColor"
+              d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
+            />
+          </svg>
+          Add Project
         </li>
+        <div>
+          <input type="text" id="add-project" />
+          <div class="add" onclick="addProject()">Add</div>
+          <div class="cancel" onclick="closeProjectPrompt()">Cancel</div>
+        </div>
       </ul>
-    </nav>
+    </aside>
+    <main>
+      <div>
+        <div class="list-title">
+          <h1 data-title>All</h1>
+          <div class="add-task" data-add-task>
+            <svg style="height: 1.5em" viewBox="0 0 24 24">
+              <path
+                fill="currentColor"
+                d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"
+              />
+            </svg>
+            Add Task
+          </div>
+        </div>
+        <ul data-list class="tasks" placeholder="No task"></ul>
+      </div>
+    </main>
   </body>
 </html>
